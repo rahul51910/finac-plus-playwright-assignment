@@ -1,7 +1,10 @@
 
 import {expect, Locator, Page} from '@playwright/test';
 
+
 export class UiPage {
+
+    
 
     readonly page : Page;
 
@@ -40,35 +43,65 @@ export class UiPage {
 
     }
 
+public async loginPage(username: string,password: string)
+{
+    
+    console.log("Entering username...");
+    await this.UserName_textbox.fill(username);
 
-    public async loginPage()
-    {
-        await this.UserName_textbox.fill("rahul1211");
-        await this.Password_textbox.fill("Rahul@123");
-        await this.login_btn.click();
-    }
-    public async Verify_the_Login()
-    {
-        await expect(this.UserName_verify).toBeVisible();
-        await expect(this.LogOut_btn).toBeVisible();
-    }
-    public async go_to_BookStore()
-    {
-        await this.bookStorePage_btn.click();
-    }
-    public async SearchBook_and_Verify()
-    {
-        await expect(this.SearchBook_textbox).toBeVisible();
-        await this.page.waitForLoadState();
-        await this.SearchBook_textbox.fill("Learning JavaScript Design Patterns");
-        // await expect(this.SearchBook_textbox).toHaveText("Learning JavaScript Design Patterns");
-        await expect(this.Book_validate).toBeVisible();
+    console.log("Entering password...");
+    await this.Password_textbox.fill(password);
 
+    console.log("Clicking login button...");
+    await this.login_btn.click();
 
-        console.log(await this.page.locator("tbody").textContent());
+    console.log("Login action completed.");
+}
 
-    }
+public async Verify_the_Login()
+{
+    console.log("Verifying logged-in username visibility...");
+    await expect(this.UserName_verify).toBeVisible();
 
+    console.log("Verifying logout button visibility...");
+    await expect(this.LogOut_btn).toBeVisible();
+
+    console.log("Login verification successful.");
+}
+
+public async go_to_BookStore()
+{
+    console.log("Navigating to Book Store page...");
+    await this.bookStorePage_btn.click();
+    await this.page.waitForTimeout(1000);
+     await this.page.waitForLoadState('load');
+     await this.page.waitForLoadState('domcontentloaded');
+  
+    console.log("Successfully navigated to Book Store page.");
+}
+
+public async SearchBook_and_Verify()
+{
+    console.log("Verifying Search Book textbox visibility...");
+    await expect(this.SearchBook_textbox).toBeVisible();
+    await this.page.waitForLoadState('domcontentloaded');
+
+    console.log("Waiting for page load...");
+    await this.page.waitForLoadState('load');
+
+    console.log("Searching for book: Learning JavaScript Design Patterns");
+    await this.SearchBook_textbox.fill("Learning JavaScript Design Patterns");
+
+    console.log("Verifying searched book is visible...");
+    await expect(this.Book_validate).toBeVisible();
+
+    console.log("Fetching table content...");
+    console.log("after search the book result is:  "+await this.page.locator("tbody").textContent());
+
+    console.log("Book search and validation completed successfully.");
+
+    await this.page.waitForTimeout(2000);
+}
 
 
 
