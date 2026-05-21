@@ -1,10 +1,11 @@
 import {test,expect,request} from '@playwright/test'
 import dotenv from 'dotenv';
-
+import testData from '../../test-data/user.json';
 test('Create User', async() =>
 
 { console.log("Test Started");
     dotenv.config();
+    
 let context = await request.newContext({
 
     

@@ -1,0 +1,10 @@
+{
+  "createUser": {
+    "name": "Rahul Singh",
+    "email": "rahuat1211@gmail.com",
+    "role": "tester"
+  },
+  "updateUser": {
+    "name": "Rahul Updated"
+  }
+}
